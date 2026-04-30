@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrailPin - GPS Route Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; background: #fafafa; }
+        .hero { background: linear-gradient(135deg, #2D6A4F 0%, #52B788 100%); color: white; padding: 60px 20px; text-align: center; }
+        .hero h1 { font-size: 36px; margin-bottom: 8px; }
+        .hero p { font-size: 18px; opacity: 0.9; }
+        .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 32px 0; }
+        .feature { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
+        .feature .icon { font-size: 32px; margin-bottom: 8px; }
+        .feature h3 { color: #2D6A4F; margin-bottom: 4px; }
+        .feature p { color: #666; font-size: 14px; }
+        .links { text-align: center; margin: 32px 0; }
+        .links a { color: #2D6A4F; margin: 0 12px; text-decoration: none; font-weight: 500; }
+        .links a:hover { text-decoration: underline; }
+        .privacy-badge { background: #f0fdf4; padding: 20px; border-radius: 12px; text-align: center; margin: 32px 0; border: 2px solid #52B788; }
+        .privacy-badge .icon { font-size: 40px; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>TrailPin</h1>
+        <p>Privacy-first GPS route tracker for outdoor enthusiasts</p>
+    </div>
+
+    <div class="container">
+        <div class="privacy-badge">
+            <div class="icon">🔒</div>
+            <h2>Your Data Stays On Your Device</h2>
+            <p>No accounts. No cloud. No tracking. Ever.</p>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="icon">🗺️</div>
+                <h3>GPS Recording</h3>
+                <p>Record hikes, bike rides, and walks with real-time stats</p>
+            </div>
+            <div class="feature">
+                <div class="icon">📍</div>
+                <h3>Waypoints</h3>
+                <p>Drop pins at trail junctions and points of interest</p>
+            </div>
+            <div class="feature">
+                <div class="icon">🔋</div>
+                <h3>Battery Smart</h3>
+                <p>3 power modes from 6h to 20h of recording</p>
+            </div>
+            <div class="feature">
+                <div class="icon">📤</div>
+                <h3>GPX Export</h3>
+                <p>Export routes to use in any mapping app</p>
+            </div>
+        </div>
+
+        <div class="links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="support.html">Support</a>
+        </div>
+    </div>
+</body>
+</html>
