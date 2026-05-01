@@ -39,8 +39,6 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         manager.distanceFilter = 10
         manager.pausesLocationUpdatesAutomatically = false
-        manager.allowsBackgroundLocationUpdates = true
-        manager.showsBackgroundLocationIndicator = true
     }
 
     func requestPermission() {
@@ -50,6 +48,8 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     func startTracking(distanceFilter: Double = 10, accuracy: CLLocationAccuracy = kCLLocationAccuracyHundredMeters) {
         manager.desiredAccuracy = accuracy
         manager.distanceFilter = distanceFilter
+        manager.allowsBackgroundLocationUpdates = true
+        manager.showsBackgroundLocationIndicator = true
         manager.startUpdatingLocation()
         isTracking = true
     }
