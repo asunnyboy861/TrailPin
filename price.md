@@ -27,6 +27,13 @@
 - **Type**: Non-consumable (one-time purchase)
 - **Price**: $3.99 (Tier 3)
 
+### Localization (English - US)
+
+| Field | Value | Max Chars | Status |
+|-------|-------|-----------|--------|
+| **Display Name** | TrailPin Pro | 30 | ✅ 12 chars |
+| **Description** | Unlock all features with one-time purchase | 45 | ✅ 43 chars |
+
 ### Pro Features
 
 - All free tier features
@@ -62,6 +69,8 @@
 - [x] No cancellation instructions needed (one-time purchase)
 - [x] Pricing clearly stated in app
 - [x] No free trial (not applicable to non-consumable)
+- [x] Display Name ≤ 30 characters
+- [x] Description ≤ 45 characters
 
 ## Pricing Rationale
 
