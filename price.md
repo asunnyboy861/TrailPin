@@ -1,12 +1,12 @@
 # Pricing Configuration
 
-## Monetization Model: Free + One-Time IAP (Pro Upgrade)
+## Monetization Model: Free + Non-Consumable IAP
 
 - **Price**: Free download with one-time Pro upgrade
-- **IAP**: Yes - Non-consumable (one-time purchase)
+- **IAP**: Yes - Non-consumable (one-time purchase, no subscription)
 - **Subscription**: None
 
-## Free Tier
+## Free Tier Features
 
 - GPS route recording (unlimited time)
 - Real-time stats (distance, time, speed, altitude)
@@ -18,12 +18,14 @@
 - Dark mode support
 - Miles/kilometers toggle
 
-## Pro Upgrade
+## In-App Purchase
+
+### TrailPin Pro (Non-Consumable)
 
 - **Reference Name**: TrailPin Pro
 - **Product ID**: `com.zzoutuo.TrailPin.pro`
 - **Type**: Non-consumable (one-time purchase)
-- **Price**: $3.99
+- **Price**: $3.99 (Tier 3)
 
 ### Pro Features
 
@@ -42,19 +44,33 @@
 
 ## App Store Connect Pricing
 
-- **Price Tier**: Free (download)
-- **IAP Tier**: Tier 3 = $3.99 (non-consumable)
+- **App Price Tier**: Free (download)
+- **IAP Price Tier**: Tier 3 = $3.99 (non-consumable)
 
 ## Policy Pages Required
 
-- Support Page: Yes
-- Privacy Policy: Yes
-- Terms of Use: No (not subscription - not required for one-time IAP)
+| Page | Required | Reason |
+|------|----------|--------|
+| Support Page | ✅ Yes | All apps require support |
+| Privacy Policy | ✅ Yes | All apps require privacy policy |
+| Terms of Use | ❌ No | Not required for non-consumable IAP (only subscription apps need Terms) |
+
+## Apple IAP Compliance Checklist
+
+- [x] Restore purchases functionality implemented
+- [x] No auto-renewal terms needed (non-consumable, not subscription)
+- [x] No cancellation instructions needed (one-time purchase)
+- [x] Pricing clearly stated in app
+- [x] No free trial (not applicable to non-consumable)
 
 ## Pricing Rationale
 
-- $3.99 < GPS Tracks ($6.99 one-time) - cheaper alternative
-- $3.99 one-time < Gaia GPS ($39.99/year) - massive savings
-- $3.99 one-time < Geo Tracker ($2.99/month = $35.88/year) - massive savings
+| Competitor | Price | Our Advantage |
+|------------|-------|---------------|
+| GPS Tracks | $6.99 one-time | $3.99 is 43% cheaper |
+| Gaia GPS | $39.99/year | $3.99 one-time = massive savings |
+| Geo Tracker | $2.99/month ($35.88/year) | $3.99 one-time = 89% savings |
+
 - Free tier covers core needs - zero pressure to try
 - Pro features are "nice to have" not "must have" - no resentment
+- One-time purchase appeals to users who hate subscriptions
