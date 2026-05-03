@@ -59,6 +59,11 @@ final class TrackingVM {
     }
 
     func startRecording(modelContext: ModelContext) {
+        if locationManager.authorizationStatus == .notDetermined {
+            locationManager.requestPermission()
+            return
+        }
+
         guard locationManager.isAuthorized else {
             showPermissionAlert = true
             return

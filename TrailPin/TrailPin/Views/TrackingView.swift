@@ -29,15 +29,25 @@ struct TrackingView: View {
             }
         }
         .ignoresSafeArea(.container, edges: .top)
-        .alert("Location Permission Required", isPresented: $vm.showPermissionAlert) {
-            Button("Open Settings") {
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url)
+        .alert("Location Access Required", isPresented: $vm.showPermissionAlert) {
+            if vm.locationManager.authorizationStatus == .denied || vm.locationManager.authorizationStatus == .restricted {
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            } else {
+                Button("Request Permission") {
+                    vm.requestPermission()
                 }
             }
             Button("Cancel", role: .cancel) {}
         } message: {
-            Text("TrailPin needs location access to record your routes.")
+            if vm.locationManager.authorizationStatus == .denied || vm.locationManager.authorizationStatus == .restricted {
+                Text("Location access was previously denied. Please enable it in Settings to record your routes.")
+            } else {
+                Text("TrailPin needs location access to record your routes. Please grant permission when prompted.")
+            }
         }
         .sheet(isPresented: $vm.showWaypointSheet) {
             WaypointSheet(vm: vm)
