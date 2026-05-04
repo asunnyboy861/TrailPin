@@ -9,6 +9,9 @@ final class PurchaseManager {
     var isPro = false
     var isLoading = false
     var product: Product?
+    var errorMessage: String?
+    var showError = false
+    var purchaseSuccess = false
 
     private let productId = "com.zzoutuo.TrailPin.pro"
     private var updateTask: Task<Void, Never>?
@@ -29,12 +32,25 @@ final class PurchaseManager {
         do {
             let products = try await Product.products(for: [productId])
             product = products.first
+            if product == nil {
+                errorMessage = "Product not found. Please try again later."
+                showError = true
+            }
         } catch {
+            errorMessage = "Failed to load product: \(error.localizedDescription)"
+            showError = true
         }
     }
 
+    @MainActor
     func purchase() async {
-        guard let product = product else { return }
+        guard let product = product else {
+            errorMessage = "Product not available. Please check your internet connection."
+            showError = true
+            await loadProduct()
+            return
+        }
+
         isLoading = true
         defer { isLoading = false }
 
@@ -45,23 +61,45 @@ final class PurchaseManager {
                 switch verification {
                 case .verified(let transaction):
                     isPro = true
+                    purchaseSuccess = true
                     await transaction.finish()
-                case .unverified:
-                    break
+                case .unverified(let transaction, let error):
+                    errorMessage = "Purchase verification failed: \(error.localizedDescription)"
+                    showError = true
+                    await transaction.finish()
                 }
-            case .pending, .userCancelled:
+            case .pending:
+                errorMessage = "Purchase is pending approval."
+                showError = true
+            case .userCancelled:
                 break
             @unknown default:
-                break
+                errorMessage = "Unknown purchase result."
+                showError = true
             }
         } catch {
+            errorMessage = "Purchase failed: \(error.localizedDescription)"
+            showError = true
         }
     }
 
     func restorePurchases() {
+        isLoading = true
         Task {
-            try? await AppStore.sync()
-            await checkPurchased()
+            defer { isLoading = false }
+            do {
+                try await AppStore.sync()
+                await checkPurchased()
+                if isPro {
+                    purchaseSuccess = true
+                } else {
+                    errorMessage = "No previous purchases found."
+                    showError = true
+                }
+            } catch {
+                errorMessage = "Restore failed: \(error.localizedDescription)"
+                showError = true
+            }
         }
     }
 

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var purchaseManager = PurchaseManager.shared
 
     var body: some View {
         NavigationStack {
@@ -53,6 +52,17 @@ struct PaywallView: View {
     }
 
     private var purchaseSection: some View {
+        PurchaseSectionContent()
+            .padding(.top, 8)
+    }
+}
+
+struct PurchaseSectionContent: View {
+    @State private var purchaseManager = PurchaseManager.shared
+    @State private var showErrorAlert = false
+    @State private var showSuccessAlert = false
+
+    var body: some View {
         VStack(spacing: 12) {
             if purchaseManager.isPro {
                 HStack {
@@ -81,15 +91,36 @@ struct PaywallView: View {
                 .background(Color("ForestGreen"))
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
+                .disabled(purchaseManager.isLoading)
 
                 Button("Restore Purchases") {
                     purchaseManager.restorePurchases()
                 }
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
+                .disabled(purchaseManager.isLoading)
             }
         }
-        .padding(.top, 8)
+        .onChange(of: purchaseManager.showError) { _, newValue in
+            showErrorAlert = newValue
+        }
+        .onChange(of: purchaseManager.purchaseSuccess) { _, newValue in
+            showSuccessAlert = newValue
+        }
+        .alert("Error", isPresented: $showErrorAlert) {
+            Button("OK") {
+                purchaseManager.showError = false
+            }
+        } message: {
+            Text(purchaseManager.errorMessage ?? "An unknown error occurred.")
+        }
+        .alert("Success", isPresented: $showSuccessAlert) {
+            Button("OK") {
+                purchaseManager.purchaseSuccess = false
+            }
+        } message: {
+            Text("Thank you for purchasing TrailPin Pro!")
+        }
     }
 }
 
@@ -99,10 +130,10 @@ struct ProFeatureRow: View {
     let description: String
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 16) {
             Image(systemName: icon)
-                .font(.title3)
-                .foregroundStyle(Color("VibrantGreen"))
+                .font(.title2)
+                .foregroundStyle(Color("ForestGreen"))
                 .frame(width: 32)
 
             VStack(alignment: .leading, spacing: 2) {
@@ -119,7 +150,7 @@ struct ProFeatureRow: View {
                 .foregroundStyle(Color("ForestGreen"))
         }
         .padding()
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .background(Color(.systemGray6))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
